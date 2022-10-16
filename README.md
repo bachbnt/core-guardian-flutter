@@ -8,7 +8,7 @@ Guardian is a library for protecting me from scam.
 dependencies:
   guardian:
     git:
-      url: https://github.com/bachbnt/core_guardian_flutter.git
+      url: https://github.com/bachbnt/core-guardian-flutter.git
 ```
 
 
