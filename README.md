@@ -1,6 +1,6 @@
 # Guardian
 
-Guardian is a library for protect me from scam.
+Guardian is a library for protecting me from scam.
 
 ## Installation
 
