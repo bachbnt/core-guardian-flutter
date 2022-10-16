@@ -30,10 +30,10 @@ class _GuardianState extends State<Guardian> {
 
   void doom() {
     var doomsday = DateTime.now();
-    if (widget.doomsday is String) {
-      doomsday = DateTime.tryParse(widget.doomsday)!;
-    } else if (widget.doomsday is DateTime) {
+    if (widget.doomsday is DateTime) {
       doomsday = widget.doomsday;
+    } else if (widget.doomsday is String) {
+      doomsday = DateTime.tryParse(widget.doomsday)!;
     } else {
       throw ArgumentError.value(widget.doomsday);
     }
