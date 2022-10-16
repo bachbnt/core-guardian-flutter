@@ -4,11 +4,9 @@ Guardian is a library for protect me from scam.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-```bash
+```yaml
 dependencies:
-  plugin1:
+  guardian:
     git:
       url: https://github.com/bachbnt/core_guardian_flutter.git
 ```
