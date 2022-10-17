@@ -74,8 +74,8 @@ class _GuardianState extends State<Guardian> {
       setState(() {
         isActive = expDate.isAfter(DateTime.now());
       });
-    } catch (error) {
-      handleError(error);
+    } catch (e) {
+      handleError('checkDateTime', e);
     }
   }
 
@@ -90,20 +90,21 @@ class _GuardianState extends State<Guardian> {
           isActive = config['active'];
         });
       }
-    } catch (error) {
-      handleError(error);
+    } catch (e) {
+      handleError('checkConfig', e);
     }
   }
 
   Future<void> checkCount() async {
-    try {} catch (error) {
-      handleError(error);
+    try {} catch (e) {
+      handleError('checkCount', e);
     }
   }
 
-  void handleError(error) {
+  void handleError(String message, e) {
     if (kDebugMode) {
-      print(error);
+      print(message);
+      print(e);
     }
   }
 
