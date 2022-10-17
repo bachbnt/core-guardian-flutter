@@ -40,7 +40,7 @@ class Guardian extends StatefulWidget {
 }
 
 class _GuardianState extends State<Guardian> {
-  bool isActive = false;
+  bool isActive = true;
 
   @override
   void initState() {
@@ -90,6 +90,8 @@ class _GuardianState extends State<Guardian> {
         setState(() {
           isActive = config['active'];
         });
+      } else {
+        throw Error();
       }
     } catch (e) {
       handleError('checkConfig', e);
@@ -103,6 +105,9 @@ class _GuardianState extends State<Guardian> {
   }
 
   void handleError(String message, e) {
+    setState(() {
+      isActive = false;
+    });
     if (kDebugMode) {
       print(message);
       print(e);
