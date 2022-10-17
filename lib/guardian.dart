@@ -1,29 +1,38 @@
 library guardian;
 
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:guardian/constant.dart';
 import 'package:http/http.dart' as http;
 
 class Guardian extends StatefulWidget {
+  final GuardianMode mode;
+  final String appId;
   final Widget child;
-  final dynamic doomsday;
   final bool showLogo;
   final String logoUrl;
   final double logoSize;
   final String message;
   final Color messageColor;
+  final dynamic expDate;
   final String configUrl;
+  final int maxCount;
 
   const Guardian(
       {Key? key,
-      required this.doomsday,
+      required this.appId,
       required this.child,
+      this.mode = GuardianMode.config,
       this.showLogo = true,
       this.logoUrl = defaultLogoUrl,
       this.logoSize = defaultLogoSize,
       this.message = defaultMessage,
       this.messageColor = defaultMessageColor,
-      this.configUrl = defaultConfigUrl})
+      this.expDate = defaultExpDate,
+      this.configUrl = defaultConfigUrl,
+      this.maxCount = defaultMaxCount})
       : super(key: key);
 
   @override
@@ -31,39 +40,76 @@ class Guardian extends StatefulWidget {
 }
 
 class _GuardianState extends State<Guardian> {
-  bool isOutdated = false;
+  bool isActive = false;
 
   @override
   void initState() {
-    doom();
-    getConfigs();
+    init();
     super.initState();
   }
 
-  void doom() {
-    var doomsday = DateTime.now();
-    if (widget.doomsday is DateTime) {
-      doomsday = widget.doomsday;
-    } else if (widget.doomsday is String) {
-      doomsday = DateTime.tryParse(widget.doomsday)!;
-    } else {
-      throw ArgumentError.value(widget.doomsday);
+  init() {
+    switch (widget.mode) {
+      case GuardianMode.dateTime:
+        checkDateTime();
+        break;
+      case GuardianMode.count:
+        break;
+      default:
+        checkConfig();
+        break;
     }
-
-    setState(() {
-      isOutdated = doomsday.isBefore(DateTime.now());
-    });
   }
 
-  Future<http.Response> getConfigs() async {
-    http.Response response = await http.get(Uri.parse(widget.configUrl));
-    print(response.body);
-    return response;
+  void checkDateTime() {
+    try {
+      var expDate = DateTime.now();
+      if (widget.expDate is DateTime) {
+        expDate = widget.expDate;
+      } else if (widget.expDate is String) {
+        expDate = DateTime.tryParse(widget.expDate)!;
+      } else {
+        throw Error();
+      }
+      setState(() {
+        isActive = expDate.isAfter(DateTime.now());
+      });
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  Future<void> checkConfig() async {
+    try {
+      http.Response response = await http.get(Uri.parse(widget.configUrl));
+      List<dynamic> data = jsonDecode(response.body.toString());
+      var config =
+          data.firstWhere((element) => element['appId'] == widget.appId);
+      if (config != null) {
+        setState(() {
+          isActive = config['active'];
+        });
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  Future<void> checkCount() async {
+    try {} catch (error) {
+      handleError(error);
+    }
+  }
+
+  void handleError(error) {
+    if (kDebugMode) {
+      print(error);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isOutdated) {
+    if (!isActive) {
       return Scaffold(
         body: Column(
           mainAxisSize: MainAxisSize.max,

@@ -8,4 +8,9 @@ const defaultMessage =
     'This application has been locked.\nPlease contact developer to report a problem.';
 const defaultMessageColor = Color(0xFFC03A2B);
 
-const defaultConfigUrl = 'https://raw.githubusercontent.com/bachbnt/core-guardian-flutter/main/config.json';
+const defaultConfigUrl =
+    'https://raw.githubusercontent.com/bachbnt/core-guardian-flutter/main/config.json';
+const defaultExpDate = '2022-10-16';
+const defaultMaxCount = 5;
+
+enum GuardianMode { dateTime, config, count }
