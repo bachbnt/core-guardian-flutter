@@ -8,8 +8,8 @@ import 'package:guardian/constant.dart';
 import 'package:http/http.dart' as http;
 
 class Guardian extends StatefulWidget {
-  final GuardianMode mode;
   final String appId;
+  final GuardianMode mode;
   final bool showLogo;
   final String logoUrl;
   final double logoSize;
