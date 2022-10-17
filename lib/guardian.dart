@@ -116,38 +116,38 @@ class _GuardianState extends State<Guardian> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isActive) {
-      return Scaffold(
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Visibility(
-              visible: widget.showLogo,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: Image.network(
-                  widget.logoUrl,
-                  width: widget.logoSize,
-                  height: widget.logoSize,
-                ),
+    if (isActive) {
+      return widget.child;
+    }
+    return Scaffold(
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: widget.showLogo,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Image.network(
+                widget.logoUrl,
+                width: widget.logoSize,
+                height: widget.logoSize,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                widget.message,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: widget.messageColor,
-                ),
-                textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              widget.message,
+              style: TextStyle(
+                fontSize: 16,
+                color: widget.messageColor,
               ),
-            )
-          ],
-        ),
-      );
-    }
-    return widget.child;
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
