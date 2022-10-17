@@ -2,17 +2,28 @@ library guardian;
 
 import 'package:flutter/material.dart';
 import 'package:guardian/constant.dart';
+import 'package:http/http.dart' as http;
 
 class Guardian extends StatefulWidget {
-  final dynamic doomsday;
   final Widget child;
+  final dynamic doomsday;
   final bool showLogo;
+  final String logoUrl;
+  final double logoSize;
+  final String message;
+  final Color messageColor;
+  final String configUrl;
 
   const Guardian(
       {Key? key,
       required this.doomsday,
       required this.child,
-      this.showLogo = true})
+      this.showLogo = true,
+      this.logoUrl = defaultLogoUrl,
+      this.logoSize = defaultLogoSize,
+      this.message = defaultMessage,
+      this.messageColor = defaultMessageColor,
+      this.configUrl = defaultConfigUrl})
       : super(key: key);
 
   @override
@@ -25,6 +36,7 @@ class _GuardianState extends State<Guardian> {
   @override
   void initState() {
     doom();
+    getConfigs();
     super.initState();
   }
 
@@ -43,6 +55,12 @@ class _GuardianState extends State<Guardian> {
     });
   }
 
+  Future<http.Response> getConfigs() async {
+    http.Response response = await http.get(Uri.parse(widget.configUrl));
+    print(response.body);
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isOutdated) {
@@ -56,19 +74,19 @@ class _GuardianState extends State<Guardian> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: Image.network(
-                  logoUrl,
-                  width: logoSize,
-                  height: logoSize,
+                  widget.logoUrl,
+                  width: widget.logoSize,
+                  height: widget.logoSize,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                message,
+                widget.message,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Color(messageColor),
+                  color: widget.messageColor,
                 ),
                 textAlign: TextAlign.center,
               ),
