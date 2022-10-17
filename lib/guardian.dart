@@ -82,7 +82,8 @@ class _GuardianState extends State<Guardian> {
   Future<void> checkConfig() async {
     try {
       http.Response response = await http.get(Uri.parse(widget.configUrl));
-      List<dynamic> data = jsonDecode(response.body.toString());
+      List<dynamic> data =
+          jsonDecode(response.body.toString().replaceAll('\n', ''));
       var config =
           data.firstWhere((element) => element['appId'] == widget.appId);
       if (config != null) {
