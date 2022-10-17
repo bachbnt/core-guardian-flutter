@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 class Guardian extends StatefulWidget {
   final GuardianMode mode;
   final String appId;
-  final Widget child;
   final bool showLogo;
   final String logoUrl;
   final double logoSize;
@@ -19,21 +18,22 @@ class Guardian extends StatefulWidget {
   final dynamic expDate;
   final String configUrl;
   final int maxCount;
+  final Widget child;
 
-  const Guardian(
-      {Key? key,
-      required this.appId,
-      required this.child,
-      this.mode = GuardianMode.config,
-      this.showLogo = true,
-      this.logoUrl = defaultLogoUrl,
-      this.logoSize = defaultLogoSize,
-      this.message = defaultMessage,
-      this.messageColor = defaultMessageColor,
-      this.expDate = defaultExpDate,
-      this.configUrl = defaultConfigUrl,
-      this.maxCount = defaultMaxCount})
-      : super(key: key);
+  const Guardian({
+    Key? key,
+    required this.appId,
+    this.mode = GuardianMode.config,
+    this.showLogo = true,
+    this.logoUrl = defaultLogoUrl,
+    this.logoSize = defaultLogoSize,
+    this.message = defaultMessage,
+    this.messageColor = defaultMessageColor,
+    this.expDate = defaultExpDate,
+    this.configUrl = defaultConfigUrl,
+    this.maxCount = defaultMaxCount,
+    required this.child,
+  }) : super(key: key);
 
   @override
   State<Guardian> createState() => _GuardianState();
