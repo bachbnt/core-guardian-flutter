@@ -1,6 +1,6 @@
 [
   {
     "appId": "stopwatch",
-    "active": false
+    "active": true,
   }
 ]
