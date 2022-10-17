@@ -24,10 +24,17 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Guardian(
-          showLogo: true, // default true
-          doomsday: '2022-10-16', // type DateTime or String
-          child: Home()
-      ),
+          appId: String,
+          mode: GuardianMode,
+          showLogo: bool,
+          logoUrl: String,
+          logoSize: double,
+          message: String,
+          messageColor: Color,
+          expDate: String || DateTime,
+          configUrl: String,
+          maxCount: int,
+          child: HomeScreen()),
     );
   }
 }
